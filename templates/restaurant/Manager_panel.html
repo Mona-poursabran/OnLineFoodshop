@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        {% load static %}
+        <meta charset="UTF-8">
+        <title>Manager Panel</title>
+      {% block link %}{% endblock link %}
+        <link rel="stylesheet" href="{% static 'Admin_panel/css/normalize.css' %}">
+        <link rel="stylesheet" href="{% static 'Admin_panel/css/main.css' %}" media="screen" type="text/css">
+        <link href='http://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
+        <link href='http://fonts.googleapis.com/css?family=Playball' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="{% static 'Admin_panel/css/bootstrap.css' %}">
+        <link rel="stylesheet" href="{% static 'Admin_panel/css/style-portfolio.css' %}">
+        <link rel="stylesheet" href="{% static 'Admin_panel/css/picto-foundry-food.css' %}" />
+        <link rel="stylesheet" href="{% static 'Admin_panel/css/jquery-ui.css' %}">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="{% static 'Admin_panel/css/font-awesome.min.css' %}" rel="stylesheet">
+        <link rel="icon" href="{% static 'Admin_panel/favicon-1.ico' %}" type="image/x-icon">
+    </head>
+
+    <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+        <div class="container">
+            <div class="row">
+            <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="{% url 'home' %}">Manager Panel</a>
+                </div>
+
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                
+                    <ul class="nav navbar-nav main-nav  clear navbar-right ">
+                        <li><a class="color_animation" href="{% url 'manager_panel' %}">Panel</a></li>
+                        <li><a class="color_animation" href="{% url 'create_menu' %}">New Menu</a></li>
+                        <li><a class="color_animation" href="{% url 'branch_manager' %}">Branch Menu</a></li>
+                        <li><a class="color_animation" href="{% url 'show_status_branch' %}">Order's_Date</a></li>
+                        <li><a class="color_animation" href="{% url 'account_logout' %}">Log Out</a></li>
+                        
+                    </ul>
+                
+
+                </div><!-- /.navbar-collapse -->
+            </div>
+        </div><!-- /.container-fluid -->
+    </nav>
+    {% block content %}
+
+        <div id="top" class="starter_container bg">
+            <div class="follow_container">
+                <div class="col-md-6 col-md-offset-3">
+
+                    <h2 class="top-title"> Welcome {{user.username}} </h2>
+                    <h2 class="white second-title">" Best in the city "</h2>
+         {% endblock content %}   
+                    <hr>
+                </div>
+
+            </div>
+        </div>
+         
+    
+            <!-- ============ Footer Section  ============= -->
+        {% block footer %}
+            <footer class="sub_footer">
+                <div class="container">
+                    <div class="col-md-4"><p class="sub-footer-text text-center">&copy; Restaurant 2014, Theme by <a href="https://themewagon.com/">ThemeWagon</a></p></div>
+                    <div class="col-md-4"><p class="sub-footer-text text-center">Back to <a href="#top">TOP</a></p>
+                    </div>
+                    <div class="col-md-4"><p class="sub-footer-text text-center">Built With Care By <a href="#" target="_blank">Us</a></p></div>
+                </div>
+            </footer>
+        {% endblock footer %}
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script type="text/javascript" src="{% static 'Admin_panel/js/jquery-1.10.2.min.js' %}"> </script>
+        <script type="text/javascript" src="{% static 'Admin_panel/js/bootstrap.min.js' %}" ></script>
+        <script type="text/javascript" src="{% static 'Admin_panel/js/jquery-1.10.2.js' %}"></script>     
+        <script type="text/javascript" src="{% static 'Admin_panel/js/jquery.mixitup.min.js' %}" ></script>
+        <script type="text/javascript" src="{% static 'Admin_panel/js/main.js' %}" ></script>
+        
+{% block script %}        
+{% endblock script %}
+</body>
+</html>

@@ -1,0 +1,39 @@
+{% extends 'restaurant/Admin_panel.html' %} 
+
+
+{% block content %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'Admin_panel/css/color.css' %}">
+<div style="background-image:url({% static 'Admin_panel/images/image2.jpg' %})">
+    <div style="margin: auto;max-width: 300px; padding-top:80px" class='color'>
+        <h1 style="border:none;" class='color'>Add Food:</h1>
+    <a href="{% url 'new_category' %}"  class='colorlink'  ><h3> add a new category</h3> </a>
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label>Food Name </label>
+                    <p style="color:black"> {{ form.food_name }}</p>
+                </div>
+                <div class="form-group ">
+                    <label>Meal </label>
+                    <p style="color:black"> {{ form.meal }}</p>
+                </div>
+                <div class="form-group">
+                    <label>Category</label>
+                    <p style="color:black"> {{ form.category }}</p>
+                </div>
+                <div class="form-group">
+                    <label>Image</label>
+                    {{ form.image }}
+                </div>
+                <div class="form-group">
+                    <label>Description</label>
+                    {{ form.description }}
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+</div>
+{% endblock content %}
+
+

@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+{% load static %}
+<section class="ftco-section ftco-wrap-about">
+     
+    <div class="container">
+        
+        <div class="row">
+            <div class="col-md-7 d-flex">
+                <div class="img img-1 mr-md-2" style="background-image: url({% static 'customer/image/about.jpg' %});"></div>
+                <div class="img img-2 ml-md-2" style="background-image: url({% static 'customer/image/about-1.jpg' %});"></div>
+            </div>
+            <div class="col-md-5 wrap-about pt-5 pt-md-5 pb-md-3 ftco-animate">
+             
+      <div class="heading-section mb-4 my-5 my-md-0">
+         <div class="container mt-3">
+        <h2>New Address</h2>
+        <form method="POST">
+            {% csrf_token %}
+          <div class="mb-3 mt-3">
+            <label for="city">City:</label>
+            <input type="text" class="form-control" id="city"  name="city" required>
+          </div>
+          <div class="mb-3">
+            <label for="street">Street:</label>
+            <input type="text" class="form-control" id="street"  name="street" required> 
+          </div>
+          <div class="mb-3">
+            <label for="plq">Plaque:</label>
+            <input type="number" class="form-control" id="plq"  name="plaque" required min=1>
+          </div>
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+      </div>
+    </div>
+
+   
+</section>
+
+    
+
+
+{% endblock content %}

@@ -1,0 +1,286 @@
+	{% extends 'base.html' %}
+	{% block title %} Online Food{% endblock title %}
+
+	{% block script1 %}
+	{% load static %}
+		<script src="{% static 'main.js' %}"></script>
+		<script > 
+			var URL ="{% url 'search' %}"
+		</script>
+	{% endblock script1 %}
+
+
+	{% block admin %}
+		{% if user.is_superuser %}
+			<li class="nav-item"><a href="{% url 'admin_panel' %}" class="nav-link">Admin Panel</a></li>
+		{% endif %} 
+		{% if user.is_authenticated and user.is_staff and not user.is_superuser %}
+		<li class="nav-item"><a href="{% url 'manager_panel' %}" class="nav-link">Manager Panel</a></li>
+		{% endif %} 
+	{% endblock admin %}
+
+	{% block user %}
+		{% if not user.is_superuser and user.is_authenticated and not user.is_staff %}
+			<li class="nav-item"><a href="{% url 'customer_info' %}" class="nav-link">Your Profile</a></li>
+		{% endif %}
+		{% if user.is_authenticated %}
+			<li class="nav-item"><a href="{% url 'account_logout' %}" class="nav-link logout">LogOut</a></li>
+		{% endif %}
+		{% if not  user.is_authenticated %}
+			<li class="nav-item"><a href="{% url 'account_login' %}" class="nav-link">LogIn</a></li>
+			<li class="nav-item cta"> 
+
+				<div class="dropdown" style='padding:10px'>
+				<button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false" style="background: #998160">
+					Sign Up
+				</button>
+				<ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+					<li><a class="dropdown-item" href="{% url 'signup_customer' %}">As a customer</a></li>
+					<li><a class="dropdown-item" href="{% url 'signup_manager' %}">As a manager</a></li>
+				</ul>
+				</div>
+			</li>
+		{% endif %}
+
+	{% endblock user %}
+
+
+
+	{% block content %} 
+	{% load static %}
+	{% comment %} Search Part  {% endcomment %}
+
+	{% comment %} <form action="{% url 'search1' %}" class="form-inline container" style="margin-top: 22px;text-align:center;justify-content: center;">
+		<div class="form-group mx-sm-3 mb-2">
+		<input name="search" type="" class="form-control" id="" placeholder="food or restaurant">
+		</div>
+		<button type="submit" class="btn btn-outline-info btn-lg mb-2">Search</button>
+	</form>   {% endcomment %}
+
+	<div class="w-10 text-center">
+		<form id="search-form" autocomplete='off' style="margin-top: 10px;">
+			{% csrf_token %}
+			<input type="text" id='search-input' class='p-1 w-50 search' placeholder="search">
+		</form>	
+		<div id="result-box" class="result-card not-visible" style="width: 50%;max-height:none;"></div>
+	</div>
+
+			<section class="ftco-section" style="padding: 3em 0;">
+			<div class="container">
+			<div class="ftco-search">
+				<div class="col-md-12 tab-wrap">
+					<div class="tab-content" id="v-pills-tabContent">
+					<div class="tab-pane fade show active" id="v-pills-1" role="tabpanel" aria-labelledby="day-1-tab">
+						<h4 class="p-3 mb-2 bg-light text-dark text-center" style="margin-top:10px"><b> Fast Food</b> </h4>
+						<div class="row no-gutters d-flex align-items-stretch">
+							
+								{% for  menu in menu_list %}
+								{% if menu.category.type == 'Fastfood' %}
+								
+									<div class="col-md-12 col-lg-6 d-flex align-self-stretch">
+										<div class="menus d-sm-flex ftco-animate align-items-stretch">
+									{% if menu.image %}
+									<div class="menu-img img" style="background-image: url({{menu.image.url}});"></div>{% endif %}
+									<div class="text d-flex align-items-center">
+														<div>
+											<div class="d-flex">
+												<div class="one-half">
+												<h3>Restaurant: <a href="{% url 'branch_detail' menu.id %}">{{menu.name}}</a></h3>
+												</div>
+											</div>
+											<p><span>Branch: <a href="{% url 'branch_detail' menu.id %}"> {{menu.branch_name}} </a> </p>
+											</div>
+									</div>
+									</div>
+									</div>
+								{% endif %}
+								{% endfor %}
+								</div>
+								</div>
+					</div>
+					<h4 class="p-3 mb-2 bg-light text-dark text-center" style="margin-top:10px"><b>Iranian</b> </h4>
+					<div class="row no-gutters d-flex align-items-stretch">
+						
+							{% for  menu in menu_list %}
+							{% if menu.category.type == 'Iranian' %}
+							
+								<div class="col-md-12 col-lg-6 d-flex align-self-stretch">
+									<div class="menus d-sm-flex ftco-animate align-items-stretch">
+									{% if menu.image %}
+									<div class="menu-img img" style="background-image: url({{menu.image.url}});"></div> {% endif %}
+									<div class="text d-flex align-items-center">
+													<div>
+											<div class="d-flex">
+											<div class="one-half">
+												<h3>Restaurant:<a href="{% url 'branch_detail' menu.id %}">{{menu.name}}</a></h3>
+											</div>
+										</div>
+											<p><span>Branch: <a href="{% url 'branch_detail' menu.id %}"> {{menu.branch_name}} </a> </p>
+										</div>
+									</div>
+								</div>
+								</div>
+							{% endif %}
+							{% endfor %}
+							</div>
+							</div>
+					</div>
+
+					<h4 class="p-3 mb-2 bg-light text-dark text-center" style="margin-top:10px"><b>Turkish</b> </h4>
+					<div class="row no-gutters d-flex align-items-stretch">
+						
+							{% for  menu in menu_list %}
+							{% if menu.category.type == 'Turkish' %}
+							
+							
+								<div class="col-md-12 col-lg-6 d-flex align-self-stretch">
+									<div class="menus d-sm-flex ftco-animate align-items-stretch">
+									{% if menu.image %}
+									<div class="menu-img img" style="background-image: url({{menu.image.url}});"></div>{% endif %}
+									<div class="text d-flex align-items-center">
+													<div>
+											<div class="d-flex">
+											<div class="one-half">
+												<h3>Restaurant:<a href="{% url 'branch_detail' menu.id %}">{{menu.name}}</a></h3>
+											</div>
+										</div>
+											<p><span>Branch: <a href="{% url 'branch_detail' menu.id %}"> {{menu.branch_name}} </a> </p>
+										</div>
+									</div>
+								</div>
+								</div>
+							{% endif %}
+							{% endfor %}
+							</div>
+							</div>
+					</div>
+					{% comment %} ___________best seller food__________________________ {% endcomment %}
+
+					<h4 class="p-3 mb-2 bg-warning text-dark text-center" style="margin-top:10px"><b> Best Seller Food :</b> </h4>
+						<div class="container-fluid">
+							<div class="tab-pane fade show active" id="v-pills-1" role="tabpanel" aria-labelledby="day-1-tab">
+								<div class="row no-gutters d-flex flex-wrap align-items-stretch">
+									{% for best in best_food %}
+										<div class="col-md-12 col-lg-6 d-flex align-self-stretch">
+											<div class="menus d-sm-flex ftco-animate align-items-stretch">
+												<img src="{{best.image.url}}" alt="image"  class="menu-img img" >
+											<div class="text d-flex align-items-center">
+													
+													<div class="d-flex">
+													<div class="one-half">                          
+														<h3>{{best.food_name}}</h3>  
+														{% for name in best.menu_food.all %}
+														<span class="price"><a href="{% url 'branch_detail' name.menu.branch.pk %}"> Restaurant: {{name.menu.branch.name}} </a></span>
+														<span class="price"> Branch: {{name.menu.branch.branch_name}} </span>
+														{% endfor %}
+														
+													</div>
+													</div>
+												</div>
+											</div> 
+										</div>
+										{% endfor %}
+									</div>
+								</div>
+							</div>
+
+						{% comment %} ______________________best seller Restaurants__________________________ {% endcomment %}
+
+					<h4 class="p-3 mb-2 bg-info text-dark text-center" style="margin-top:10px"><b> Best Seller Restaurants :</b> </h4>
+						<div class="container-fluid">
+							<div class="card" style="width: 18rem;">
+								{% for best in best_restaurant %}
+								<img class="card-img-top" src="{{best.branch.image.url}}" alt="Card image cap">
+								<div class="card-body">
+								  <p class="card-text"><b> <a href="{% url 'branch_detail' best.branch.pk %}">  Restaurant: </b> <strong style="color:rgb(159, 18, 128)"> {{best.branch.name}} </strong> </a>  </p>
+								  <p class ="card-text"> <b>Branch:</b> <strong style="color:rgb(132, 5, 26)"> {{best.branch.branch_name}} </strong> </p>
+								</div>
+								{% endfor %}
+							</div>
+						</div>
+						
+					</div>
+				</div>
+				</div>
+			</div>
+			</div>
+		</section>
+			
+		
+	{% endblock content %}
+
+	{% block footer %}
+	<footer class="ftco-footer ftco-bg-dark ftco-section">
+	<div class="container">
+		<div class="row mb-5">
+		<div class="col-md-6 col-lg-3">
+			<div class="ftco-footer-widget mb-4">
+			<h2 class="ftco-heading-2">Feliciano</h2>
+			<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
+			<ul class="ftco-footer-social list-unstyled float-md-left float-lft mt-3">
+				<li class="ftco-animate"><a href="#"><span class="icon-twitter"></span></a></li>
+				<li class="ftco-animate"><a href="#"><span class="icon-facebook"></span></a></li>
+				<li class="ftco-animate"><a href="#"><span class="icon-instagram"></span></a></li>
+			</ul>
+			</div>
+		</div>
+		<div class="col-md-6 col-lg-3">
+			<div class="ftco-footer-widget mb-4">
+			<h2 class="ftco-heading-2">Open Hours</h2>
+			<ul class="list-unstyled open-hours">
+				<li class="d-flex"><span>Monday</span><span>9:00 - 24:00</span></li>
+				<li class="d-flex"><span>Tuesday</span><span>9:00 - 24:00</span></li>
+				<li class="d-flex"><span>Wednesday</span><span>9:00 - 24:00</span></li>
+				<li class="d-flex"><span>Thursday</span><span>9:00 - 24:00</span></li>
+				<li class="d-flex"><span>Friday</span><span>9:00 - 02:00</span></li>
+				<li class="d-flex"><span>Saturday</span><span>9:00 - 02:00</span></li>
+				<li class="d-flex"><span>Sunday</span><span> 9:00 - 02:00</span></li>
+			</ul>
+			</div>
+		</div>
+		<div class="col-md-6 col-lg-3">
+			<div class="ftco-footer-widget mb-4">
+			<h2 class="ftco-heading-2">Instagram</h2>
+			<div class="thumb d-sm-flex">
+				{% load static %}
+					<a href="#" class="thumb-menu img" style="background-image: url({% static 'food/images/insta-1.jpg' %});">
+					</a>
+					<a href="#" class="thumb-menu img" style="background-image: url({% static 'food/images/insta-2.jpg' %});">
+					</a>
+					<a href="#" class="thumb-menu img" style="background-image: url({% static 'food/images/insta-3.jpg' %});">
+					</a>
+				</div>
+				<div class="thumb d-flex">
+					<a href="#" class="thumb-menu img" style="background-image: url({% static 'food/images/insta-4.jpg' %});">
+					</a>
+					<a href="#" class="thumb-menu img" style="background-image: url({% static 'food/images/insta-5.jpg' %});">
+					</a>
+					<a href="#" class="thumb-menu img" style="background-image: url({% static 'food/images/insta-6.jpg' %});">
+					</a>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-6 col-lg-3">
+			<div class="ftco-footer-widget mb-4">
+				<h2 class="ftco-heading-2">Newsletter</h2>
+				<p>Far far away, behind the word mountains, far from the countries.</p>
+			<form action="#" class="subscribe-form">
+				<div class="form-group">
+				<input type="text" class="form-control mb-2 text-center" placeholder="Enter email address">
+				<input type="submit" value="Subscribe" class="form-control submit px-3">
+				</div>
+			</form>
+			</div>
+		</div>
+		</div>
+		<div class="row">
+		<div class="col-md-12 text-center">
+
+			<p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+	Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="icon-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+	<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
+		</div>
+		</div>
+	</div>
+	</footer>
+	{% endblock footer %}

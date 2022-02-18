@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+<div class="container mt-5">    
+  <table class="table table-striped mt-4">
+    {% for food in foods %}
+       <thead>
+           <tr>
+               <th scope="col">Name</th>
+               <th scope="col">Image</th>
+               <th scope="col">category</th>
+           </tr>
+       </thead>
+       <tbody class='list'>
+        <tbody>
+          <tr>
+            <td>{{food.food.food_name}}</td>
+            <td>{% if food.food.image %}
+                <img src="{{food.food.image.url}}" alt="image"  class="menu-img img" style="width:30%; height:30%" >
+              {% endif %}</td>
+              <td>{{food.food.category}}</td>
+              
+          </tr>
+        </tbody>
+        {% endfor %}
+  </table>
+{% endblock content %}

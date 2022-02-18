@@ -1,0 +1,24 @@
+{% extends 'restaurant/Admin_panel.html' %}
+
+{% block content %}
+
+{% load static %}
+<link rel="stylesheet" href="{% static 'Admin_panel/css/color.css' %}">
+
+<div style="background-image:url({% static 'Admin_panel/images/image2.jpg' %}); width: 100%;height: 100%;">
+    <div style="margin: auto; max-width: 300px; padding-top:80px" class='color'>
+        <h1 style="border:none; font-size:28px" class='color'>Add Category:</h1>
+        <br><br>
+        <form method='POST'>
+            {% csrf_token %}
+            <div class="form-group">
+                <label>Category: </label>
+                <p style="color:black"> {{form.type}} </p>
+            </div>
+            <button name="submit" class="btn btn-danger">Add</button>
+        </form>
+    </div>
+</div>
+
+{% endblock content %} 
+

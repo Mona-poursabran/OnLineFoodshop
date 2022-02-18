@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    {% load static %}
+	<meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Simple House Template</title>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400" rel="stylesheet" />    
+	<link href="{% static 'Check_Branch/css/templatemo-style.css' %}" rel="stylesheet" />
+</head>
+
+<body> 
+{% load static %}
+	<div class="container">
+	<!-- Top box -->
+		<!-- Logo & Site Name -->
+		<div class="placeholder">
+			<div class="parallax-window" data-parallax="scroll" style=" background-image:url({% static 'Check_Branch/img/original.jpg' %});background-repeat: no-repeat;
+            background-size: cover">
+				<div class="tm-header">
+					<div class="row tm-header-inner">
+						<div class="col-md-6 col-12">
+							<div class="tm-site-text-box">
+								<h1 class="tm-site-title"><a href="{% url 'admin_panel' %}" class="tm-nav-link active" style="font-weight:bold">Admin Panel</a></h1>	
+							</div>
+						</div>
+						<nav class="col-md-6 col-12 tm-nav">
+							<ul class="tm-nav-ul">
+								<li class="tm-nav-li"></li>
+							</ul>
+						</nav>	
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<main>
+			<header class="row tm-welcome-section">
+				<h2 class="col-12 text-center tm-section-title">Restaurants</h2>
+			</header>
+			<div class="row tm-gallery">              
+				<div id="tm-gallery-page-pizza" class="tm-gallery-page">
+                    {% for rest in check_branch %}
+					<article class="col-lg-3 col-md-4 col-sm-6 col-12 tm-gallery-item ">
+						<figure>
+							{% if rest.image %}
+
+							<img id="item_delet" src="{{rest.image.url}}" alt="Image" class="img-fluid" style="border: 1px solid #ddd;
+                            border-radius: 4px;
+                            padding: 5px;
+                            width: 300px;"/>{% endif %}
+							<figcaption>
+								<h4 id="item_delet" class="tm-gallery-title" style="color: #fc6e1f;font-weight: bold">{{rest.name}} <button type="submit" class="delete" onClick=DeleteBranch({{rest.id}})> Delete </button></h4>
+								<p id="item_delet" class="tm-gallery-description"><a href="{% url 'branch_detail_superuser' rest.pk %}" style="text-decoration:none; 
+                                                                    color:black; font-weight:bold"> Branch: {{rest.branch_name}}</a> Manager: {{rest.manager}}</p>
+							</figcaption>
+						</figure>
+                    </article>
+                    {% endfor %}
+                </div>	
+			</div>
+		</main>
+	</div>
+	<script src="{% static 'Check_Branch/js/jquery.min.js' %}"></script>
+	<script src="{% static 'Check-Branch/js/parallax.min.js' %}"></script>
+    <script>
+        function DeleteBranch(id) {
+  var action = confirm("Are you sure you want to delete this address?");
+  if (action != false) {
+    $.ajax({
+        url: '{% url "delete_rest" %}',
+        data: {
+            'id': id,
+        },
+        dataType: 'json',
+        success: function (data) {
+            if (data.deleted) {
+              $("#item_delet").remove();
+            }
+        }
+    });
+  }
+}
+
+    </script>
+
+</body>
+</html>

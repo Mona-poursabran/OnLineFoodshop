@@ -1,0 +1,359 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% load static %}
+<section class="ftco-section ftco-wrap-about">
+     
+    <div class="container">
+        
+        <div class="row">
+            <div class="col-md-7 d-flex">
+                <div class="img img-1 mr-md-2" style="background-image: url({% static 'customer/image/about.jpg' %});"></div>
+                <div class="img img-2 ml-md-2" style="background-image: url({% static 'customer/image/about-1.jpg' %});"></div>
+            </div>
+            <div class="col-md-5 wrap-about pt-5 pt-md-5 pb-md-3 ftco-animate">
+             
+      <div class="heading-section mb-4 my-5 my-md-0">
+          
+          {% for customer in customer_list %}
+          {% if customer.username == user.username %} 
+          
+          <span class="subheading">{{customer.username}}</span>
+          <br><br>
+
+        <h3 class="mb-4">Email : {{customer.email}} </h3>
+        <p> First name : {{customer.first_name}}</p>
+        <p> Last name : {{customer.last_name}}</p>
+        <a href="{% url 'customer_update' customer.pk %}" clss="btn btn-warning" > Edit Your Profile </a>  
+      </div>
+                <pc class="time">
+                    <h3 class="subheading"> Your Main Address: </h3>
+                    {% for a in addr %}
+                    {% for ac in a.addr_customer.all  %}
+                      {% if ac.is_main and ac.customer.username == user.username %} 
+                      <span>City <strong>{{a.city}}</strong></span>
+                      <span>Street <strong>{{a.street}}</strong></span>
+                      <span>Plaque <strong>{{a.plaque}}</strong></span>
+                      <p> <a href="{% url 'update_addr' a.pk %}" clss="btn btn-warning" > Edit Main Address </a></p> 
+                      {% endif %}
+                    {% endfor %}
+                    {% endfor %} 
+                    <a class="btn btn-outline-warning" href="{% url 'customer_order' %}"> Check your orders </a>
+                </p>
+                 
+            </div>
+        {% endif %}
+        {% endfor %}  
+       
+        </div>
+        
+    </div>
+    
+</section> 
+
+{% comment %} 
+<div class="section" style="margin-bottom:20px; ">
+
+    <div class="container">
+
+      <div class="row justify-content-md-center">
+
+        <div class="col-12 col-md-8">
+
+          <div id="main" class="card">
+
+            <div class="card-body">
+
+                <div class="form-group">
+                   
+                  <label for="addr"><b> Your address :) <a href="{% url 'create_addr' %}" class ="btn btn-outline-warning"> Add New Address </a></b></label>
+
+                </div>
+                {% for addr in customer_addr  %}
+                {% if not addr.is_main %}
+                <p class="show_addr record"> <strong> city:</strong> {{addr.address.city}}, <strong> street:</strong> 
+                  {{addr.address.street}} , <strong> plaque: </strong> {{addr.address.plaque}} 
+                  <a href="{% url 'update_addr' addr.address.pk %}" class="btn btn-info" >Edit</a> 
+                  <a href="" class="btn btn-danger delete1" >Delete</a>
+                </p>
+                <hr>
+                {% endif %}
+                {% endfor %}
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  </div>  {% endcomment %}
+
+
+<div class="container">
+    <div class="row">
+      <div class="col-md-4 ">
+        <h3>Add Address</h3>
+        <form id="addUser" action=''>
+        {% csrf_token %}
+          <div class="form-group">
+            <input class="form-control" type="text" name="city" placeholder="city" required>
+          </div>
+          <div class="form-group">
+            <input class="form-control" type="text" name="street" placeholder="street" required>
+          </div>
+          <div class="form-group">
+            <input class="form-control" type="number" name="plaque" min="1"  placeholder="plaque" required>
+          </div>
+          <button class="btn btn-primary form-control" type="submit" style="margin-bottom:10px;">SUBMIT</button>
+        </form>
+      </div>
+      <div class="col-md-8">
+        <h3>Address</h3>
+        <table id="userTable" class="table table-striped">
+          <tr>
+            <th>City</th>
+            <th>Street</th>
+            <th colspan="3">Plaque</th>
+  
+          </tr>
+          {% if Address  %}
+          {% for user1 in Address %}
+          {% if not user1.is_main  and user1.customer.username == user.username %}
+          <tr id="user-{{user1.address.id}}">
+              <td class="userCity userData" name="city">{{user1.address.city}}</td>
+              <td class="userStreet userData" name="street">{{user1.address.street}}</td>
+              <td class="userPlaque userData" name="plaque">{{user1.address.plaque}}</td>
+     
+              <td align="center">
+                  <button class="btn btn-success form-control" onClick="editUser({{user1.address.id}})" data-toggle="modal" data-target="#myModal")>EDIT</button>
+              </td>
+              <td align="center">
+                  <button class="btn btn-danger form-control" onClick="deleteUser({{user1.address.id}})">DELETE</button>
+              </td>
+          </tr>
+          {% endif %}
+          {% endfor %}
+          {% else %}
+            No Address
+          {% endif %}
+        </table>
+      </div>
+    </div>
+  </div>
+  <!-- Modal -->
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"> X </span></button>
+          <h4 class="modal-title" id="myModalLabel">Update Address</h4>
+        </div>
+        <form id="updateUser" action="">
+        <div class="modal-body">
+            <input class="form-control" id="form-id" type="hidden" name="formId"/>
+            <label for="city">city</label>
+            <input class="form-control" id="form-city" type="text" name="formCity"/>
+            <label for="street">street</label>
+            <input class="form-control" id="form-street" type="text" name="formStreet"/>
+            <label for="plaque">plaque</label>
+            <input class="form-control" id="form-plaque" type="number" name="formPlaque" min="1"/>
+        </div>
+        <div class="modal-footer">
+            <button type="submit" class="btn btn-primary" >Save changes</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+
+
+{% comment %} <article id="content" class="col-11 container">
+  <h2> Orders History </h2>
+<div class="wrap">
+  {% for o in orders %}
+  <section class="col-1-3"><div class="wrap-col">
+  <div class="box">
+    <div id="my-foods">
+      <h2 class="letter_spacing">{{o.menu_item.menu_item.food.food_name}}<span></span></h2>
+      <h2 class="letter_spacing">{{o.branch.restaurant_branch_name}}<span></span></h2>
+      <p class="pad_bot1">Status : {{o.customer_status}}</p>
+      <p class"letter_spacing">Price : <span>{{o.total_price}}</span></p>
+      <p class"letter_spacing">Date : <span>{{o.created_at_jalali.date}}</span></p>
+    </div>
+  </div>
+  {% endfor %}
+  </section>
+</div>
+</article> {% endcomment %}
+
+
+{% endblock content %}
+
+{% block scriptjs %}
+
+<script>
+// Create Django Ajax Call
+$("form#addUser").submit(function() {
+    var cityInput = $('input[name="city"]').val().trim();
+    var streetInput = $('input[name="street"]').val().trim();
+    var plaqueInput = $('input[name="plaque"]').val().trim();
+    if (cityInput && streetInput && plaqueInput) {
+        // Create Ajax Call
+        $.ajax({
+            url: '{% url "crud_ajax_create" %}',
+            data: {
+                'city': cityInput,
+                'street': streetInput,
+                'plaque': plaqueInput
+            },
+            dataType: 'json',
+            success: function (data) {
+              console.log("User's data ",data.user)
+                if (data.user) {
+                  appendToUsrTable(data.user);
+                }
+            }
+        });
+      } else {
+        alert("All fields must have a valid value.");
+    }
+    $('form#addUser').trigger("reset");
+    return false;
+});
+function appendToUsrTable(user) {
+  $("#userTable > tbody:last-child").append(`
+        <tr id="user-${user.id}">
+            <td class="userCity" name="city">${user.city}</td>
+            '<td class="userStreet" name="street">${user.street}</td>
+            '<td class="userPlaque" name="plaque">${user.plaque}</td>
+            '<td align="center">
+                <button class="btn btn-success form-control" onClick="editUser(${user.id})" data-toggle="modal" data-target="#myModal")">EDIT</button>
+            </td>
+            <td align="center">
+                <button class="btn btn-danger form-control" onClick="deleteUser(${user.id})">DELETE</button>
+            </td>
+        </tr>
+    `);
+}
+
+
+
+
+$("form#updateUser").submit(function() {
+    var idInput = $('input[name="formId"]').val().trim();
+    var cityInput = $('input[name="formCity"]').val().trim();
+    var streetInput = $('input[name="formStreet"]').val().trim();
+    var plaqueInput = $('input[name="formPlaque"]').val().trim();
+    
+    console.log(idInput)
+    console.log(cityInput)
+    console.log(streetInput)
+
+
+    if (cityInput && streetInput && plaqueInput) {
+        // Create Ajax Call
+        $.ajax({
+            url: '{% url "crud_ajax_update" %}',
+            data: {
+                'id': idInput,
+                'city': cityInput,
+                'street': streetInput,
+                'plaque': plaqueInput
+            },
+            dataType: 'json',
+            success: function (data) {
+              console.log('data.user', data.user)
+              
+                if (data.user) {
+                  updateToUserTabel(data.user);
+                }
+            }
+        });
+       } else {
+        alert("All fields must have a valid value.");
+    }
+    $('form#updateUser').trigger("reset");
+    $('#myModal').modal('hide');
+    return false;
+});
+
+// Update Django Ajax Call
+function editUser(id) {
+  console.log("ID: ",id)
+
+  if (id) {
+    tr_id = "#user-" + id;
+    city = $(tr_id).find(".userCity").text();
+    street = $(tr_id).find(".userStreet").text();
+    plaque = $(tr_id).find(".userPlaque").text();
+
+    console.log("city",city)
+    console.log("street",street)
+    console.log("plaque",plaque)
+
+
+    $('#form-id').val(id);
+    $('#form-city').val(city);
+    $('#form-street').val(street);
+    $('#form-plaque').val(plaque);
+  }
+}
+function updateToUserTabel(user){
+  console.log("User",user)
+
+    $("#userTable #user-" + user.id).children(".userData").each(function() {
+        var attr = $(this).attr("city");
+        console.log('attribute',attr)
+
+        if (attr == "city") {
+          $(this).text(user.city);
+        } else if (attr == "street") {
+          $(this).text(user.street);
+        } else {
+          $(this).text(user.plaque);
+        }
+        location.reload()
+      });
+}
+
+function deleteUser(id) {
+  var action = confirm("Are you sure you want to delete this address?");
+  if (action != false) {
+    $.ajax({
+        url: '{% url "crud_ajax_delete" %}',
+        data: {
+            'id': id,
+        },
+        dataType: 'json',
+        success: function (data) {
+            if (data.deleted) {
+              $("#userTable #user-" + id).remove();
+              
+            }
+        }
+    });
+  }
+}
+
+
+</script>
+
+{% endblock scriptjs %} 
+
+     
+
+
+
+
+
+
+
+
+
+
+
+

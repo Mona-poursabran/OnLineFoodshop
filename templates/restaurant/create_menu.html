@@ -1,0 +1,70 @@
+{% extends 'base.html' %} 
+{% block link %}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+{% endblock link %}
+
+{% block script1 %}
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+{% endblock script1 %}
+ 
+{% block logo %}
+<a class="navbar-brand" href="{% url 'manager_panel' %}">Manager Panel</a>
+{% endblock logo %}
+
+
+{% block navbar %}
+<li style="padding-right:25px"><a  href="{% url 'manager_panel' %}">Home Page</a></li>
+<li style="padding-right:25px"><a  href="{% url 'branch_manager' %}">Branch</a></li>
+{% endblock navbar %}
+
+
+{% block welcome %}{% endblock welcome %}
+
+
+{% block content %}
+{% load static %}
+    {% if user.is_authenticated and user.is_staff %}
+    {% load static %}
+    <section class="ftco-section ftco-wrap-about">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-7 d-flex">
+                    <div class="img img-1 mr-md-2" style="background-image: url({% static 'food/images/about.jpg' %});"></div>
+                    <div class="img img-2 ml-md-2" style="background-image: url({% static 'food/images/about-1.jpg' %});"></div>
+                </div>
+                <div class="col-md-5 wrap-about pt-5 pt-md-5 pb-md-3 ftco-animate">
+          <div class="heading-section mb-4 my-5 my-md-0">
+              <span class="subheading"> Menu</span>
+          </div>
+          <br><br>
+          {% if branch_manager %}
+          <form method='POST'>
+            {% csrf_token %}
+            <select class="form-select " aria-label="Default select example" name="food" style="margin-bottom: 20px;background: #c8a97e;">
+                {% for f in food %}
+                <option>{{f}}</option>
+                {% endfor %}
+              </select>
+              <br>
+              <div class="form-group">
+                <label for="price"> Price </label>
+                <input type="number" min=1 name= "price" id="price" required>
+              </div>
+             
+              <div class="form-group">
+                <label for="quantity"> quantity </label>
+                <input type="number" id="quantity" name= "number" min=0 required>
+              </div>   
+                                      
+              <button type="submit" class="btn btn-dark btn-lg"> Add </button>
+          </form>
+          {% endif %}
+                </div>
+            </div>
+        </div>
+    </section>
+    {% endif %} 
+  
+{% endblock content %} 
+

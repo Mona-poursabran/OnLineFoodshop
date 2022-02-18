@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+ <div class ="container-fluid">
+
+<div class="row">
+	<div class="col-lg-6">
+		<img style="border:2px solid #888; width: 500px;height: auto;border-radius: 30px;" src="{{object.food.image.url}}" class="menu-img img">
+	</div>
+
+	<div style="padding:50px" class="col-lg-6">
+		{% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+            <li {% if message.tags %} class="{{ message.tags }}" {% endif %}>
+                {{ message }}
+            </li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+		<h3>{{object.food.food_name}}</h3>
+		<hr>
+		<form method="POST" >
+			{% csrf_token %}
+			<input min="1" value=1 type="number" name="quantity" >
+			<input class="btn btn-dark " type="submit" value="Add to Cart">
+		</form>
+		<h2>Price: {{product.price}}</h2>
+	</div>
+</div>
+</div> 
+
+
+{% endblock content %}
+
+

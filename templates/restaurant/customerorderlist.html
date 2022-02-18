@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<section class="pt-5 mt-4">
+    <div class="container p-3 " id="cart">
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col">Order</th>
+                            <th scope="col">Total Price</th>
+                            <th scope="col">Date</th>
+                            <th scope="col">Status</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for order in order_list %}
+                        <tr>
+                            <td>  order from {{order.menu_item.menu.branch}}</td>
+                            <td>{{order.total_price}}</td>
+                            <td class="text-muted">{{order.created_at_jalali | date:" Y/m/d"}}</td>
+                            <td>
+                                {% if order.status == 'Regist' %}
+                                Regist
+                                {% elif order.status == Send %}
+                                Send
+                                {% else %}
+                                Delivered
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock content %}

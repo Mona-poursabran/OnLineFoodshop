@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+<form method='POST'>
+    {% csrf_token %}
+
+    <label>City</label>
+    <input type='text' name='city'>
+    <label>Street</label>
+    <input type='text' name='street'>
+    <label>plaque</label>
+    <input type='number' name='plaque' min=1>
+    <label>main addr</label>
+    <input type='checkbox' name='is_main'>
+    <button type='submit'>Add </button>
+</form>
+
+
+{% endblock content %}

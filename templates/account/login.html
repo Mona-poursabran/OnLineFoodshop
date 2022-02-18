@@ -1,0 +1,30 @@
+
+{% extends 'base.html'%}
+
+{% block link %}
+{% load static %}
+    <link rel="stylesheet" href="{% static 'restaurant/loginform.css' %}">
+
+{% endblock link %}
+
+{% block content %}
+  
+    <div class="login">
+      <div class="login-triangle"></div>
+        
+        <h2 class="login-header">Log in</h2>
+      
+        <form class="login-container" method='POST'>
+          {% csrf_token %}
+          {{form.as_p}}
+          <p><input type="submit" value="Log in"></p>
+        </form>
+        <a href="{% url 'account_reset_password' %}" style=" text-decoration: none;padding-left: 100px;font-weight: bold;" >Forgot Your Password!?</a>
+        <a href="{% url 'home' %}" style=" text-decoration: none;padding-left: 165px;font-weight: bold;" >signup</a>
+       
+        
+      </div>  
+    </div>
+    
+
+{% endblock content %}

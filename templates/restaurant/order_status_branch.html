@@ -1,0 +1,102 @@
+{% extends 'base.html' %}
+
+
+{% block logo %}
+<a class="navbar-brand" href="{% url 'manager_panel' %}">Manager Panel</a>
+{% endblock logo %}
+
+
+{% block navbar %}
+<li style="padding-right:25px"><a  href="{% url 'manager_panel' %}">Home Page</a></li>
+<li style="padding-right:25px"><a class="color_animation" href="{% url 'create_menu' %}">New Menu</a></li>
+<li style="padding-right:25px"><a  href="{% url 'branch_manager' %}">Branch</a></li>
+{% endblock navbar %}
+
+
+{% block welcome %}{% endblock welcome %}
+
+
+   
+   {% comment %} {% for o in OrderItem %}
+    
+    {% for food in o.menu_item.all %}
+        {{food.food}}
+    {% endfor %}
+    
+   {% endfor %} {% endcomment %}
+
+
+{% block content %}
+{% load static %}
+
+{% if branch %}
+<section class="ftco-section ftco-wrap-about">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-7 d-flex">
+                <div class="img img-1 mr-md-2" style="background-image: url({% static 'food/images/about.jpg' %});"></div>
+                <div class="img img-2 ml-md-2" style="background-image: url({% static 'food/images/about-1.jpg' %});"></div>
+            </div>
+            <div class="col-md-5 wrap-about pt-5 pt-md-5 pb-md-3 ftco-animate">
+      <div class="heading-section mb-4 my-5 my-md-0">
+          <span class="subheading">About</span>
+        <h2 class="mb-4">{{branch.name}} Restaurant</h2>
+        <h2 class="mb-4">Branch {{branch.branch_name}} </h2>
+      </div>
+      <p>A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth.</p>
+                <pc class="time">
+                    <span>Mon - Fri <strong>8 AM - 11 PM</strong></span>
+                    <span>Address <strong>{{branch.address}}</strong></span>
+                    <span><a href="#">{{branch.create_date_jalali.date}}</a></span>
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="ftco-section bg-light">
+    <div class="container">
+        <div class="row justify-content-center mb-5 pb-2">
+    <div class="col-md-12 text-center heading-section ftco-animate">
+      <span class="subheading">Order Status</span>
+    <h2 class="mb-4"></h2>
+        </div>
+    </div>
+    </div>
+<div class="container">
+    <div class="row">
+        {% if branch_status %}
+            {% for o in OrderItem %}
+        <div class="col-md-4 ftco-animate record">
+            
+            <div class="blog-entry">
+                 
+                <a href="blog-single.html" class="block-20" style="background-image: url({{m.food.image.url}});"></a>  
+            <div class="text pt-3 pb-4 px-4">
+                <div class="meta">
+                </div>
+                <h3 class="heading">{{m.food}}</h3>
+                <p class="clearfix">
+                <a href="#" class="float-left read">{{o.total_price}} Toman</a>
+                </p>
+                <p class="clearfix">
+                    <a href="#" class="float-left read">Quantity: {{o.menu_item.quantity}}</a>
+                    </p>
+            </div>
+            </div>
+        </div>
+        {% endfor %}
+        {% endif %} 
+    </div>
+</div>
+</section>
+{% else %}
+<div class="container text-center" >
+    <p>
+        <h1 style="font-size: 80px;font-weight:bold;color: #7f1d1d;"> You are not the owner </h1> 
+    </p>
+</div>
+
+{% endif %}
+
+{% endblock content %}

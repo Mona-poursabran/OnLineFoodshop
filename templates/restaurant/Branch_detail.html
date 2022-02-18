@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% block title %}Branch Details{% endblock title %}
+
+
+{% block content %}
+{% load static %}
+<section class="ftco-section ftco-wrap-about">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-7 d-flex">
+                <div class="img img-1 mr-md-2" style="background-image: url({% static 'food/images/about.jpg' %});"></div>
+                <div class="img img-2 ml-md-2" style="background-image: url({% static 'food/images/about-1.jpg' %});"></div>
+            </div>
+            <div class="col-md-5 wrap-about pt-5 pt-md-5 pb-md-3 ftco-animate">
+      <div class="heading-section mb-4 my-5 my-md-0">
+          <span class="subheading">About</span>
+        <h2 class="mb-4">{{branch.name}} Restaurant</h2>
+        <h2 class="mb-4">Branch {{branch.branch_name}} </h2>
+      </div>
+      <p>A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a paradisematic country, in which roasted parts of sentences fly into your mouth.</p>
+                <pc class="time">
+                    <span>Mon - Fri <strong>8 AM - 11 PM</strong></span>
+                    <span>Address <strong>{{branch.address}}</strong></span>
+                    <span><a href="#">{{branch.create_date_jalali.date}}</a></span>
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="ftco-section bg-light">
+    <div class="container">
+        <div class="row justify-content-center mb-5 pb-2">
+    <div class="col-md-12 text-center heading-section ftco-animate">
+      <span class="subheading">Category</span>
+    <h2 class="mb-4">{{branch.category}}</h2>
+        </div>
+    </div>
+    </div>
+<div class="container">
+    <div class="row">
+        {% for m in branch.menu.menu.all %} 
+        <div class="col-md-4 ftco-animate">
+            
+            <div class="blog-entry">
+                 
+                <a href="blog-single.html" class="block-20" style="background-image: url({{m.food.image.url}});"></a>  
+            <div class="text pt-3 pb-4 px-4">
+                <div class="meta">
+                    {% if not user.is_superuser and not user.is_staff %}
+                <div><a href="{% url 'product' m.pk %}" class='btn btn-warning'>Order</a></div>
+                    {% endif %}
+                </div>
+                <h3 class="heading">{{m.food}}</h3>
+                <p class="clearfix">
+                <a href="#" class="float-left read">{{m.price}} Toman</a>
+                </p>
+            </div>
+            </div>
+        </div>
+        {% endfor %} 
+    </div>
+</div>
+</section>
+
+
+{% endblock content %}

@@ -1,0 +1,146 @@
+{% comment %} {% extends 'base.html' %} 
+
+{% block content %} 
+
+{% load crispy_forms_tags %}
+<div class="container">
+    <h2>Sign Up</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form|crispy }}
+        <button type="submit" class="btn btn-info" style="margin-top:20px">Sign Up</button>
+    </form>
+</div>  
+
+ {% endblock content %}  {% endcomment %}
+
+
+ <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+ <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+ <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+ <!------ Include the above in your HEAD tag ---------->
+ 
+ <!doctype html>
+ <html lang="en">
+ <head>
+     <!-- Required meta tags -->
+     <meta charset="utf-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+ 
+     <!-- Fonts -->
+     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+     <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,600" rel="stylesheet" type="text/css">
+ 
+ 
+ 
+     <link rel="icon" href="Favicon.png">
+ 
+     <!-- Bootstrap CSS -->
+     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+ 
+     <title>Laravel</title>
+ </head>
+ {% load static %}
+ <body style="background-image: url('{% static 'signup/emp-4.jpg' %}'); background-repeat: no-repeat;  background-size: cover;">
+ 
+ <nav class="navbar navbar-expand-lg navbar-light navbar-laravel">
+     <div class="container">
+     <a class="navbar-brand" href="{% url 'home' %}" style="font-weight: bold; color:white">Online Food</a>
+     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+         <span class="navbar-toggler-icon"></span>
+     </button>
+ 
+     <div class="collapse navbar-collapse" id="navbarSupportedContent">
+         <ul class="navbar-nav ml-auto">
+             <li class="nav-item">
+                 <a class="nav-link" href="{% url 'account_login' %}" style="font-weight: bold; color:white">Login</a>
+             </li>
+         
+         </ul>
+ 
+     </div>
+     </div>
+ </nav>
+ 
+ <main class="my-form" style="margin-top: 30px;margin-bottom: 30px;">
+     <div class="cotainer">
+         <div class="row justify-content-center" style="margin: auto;">
+             <div class="col-md-6">
+                     <div class="card">
+                         <div class="card-header bg-dark  text-center text-white">Register</div>
+                         <div class="card-body">
+                             <form name="my-form" onsubmit="return validform()"  method="POST">
+                                 {% csrf_token %}
+                                <div class="form-group row">
+                                     <label for="full_name" class="col-md-4 col-form-label text-md-right ">username</label>
+                                     <div class="col-md-6">
+                                         {{form.username}}
+                                     </div>
+                                 </div> 
+ 
+                                 <div class="form-group row">
+                                     <label for="email_address" class="col-md-4 col-form-label text-md-right">E-Mail Address</label>
+                                     <div class="col-md-6">
+                                         {{form.email}}
+                                     </div>
+                                 </div>
+                                 <div class="form-group row">
+                                     <label for="email_address" class="col-md-4 col-form-label text-md-right">Password</label>
+                                     <div class="col-md-6">
+                                         {{form.password1}}
+                                     </div>
+                                 </div>
+                                 <div class="form-group row">
+                                     <label for="email_address" class="col-md-4 col-form-label text-md-right">Confirm Password</label>
+                                     <div class="col-md-6">
+                                         {{form.password2}}
+                                     </div>
+                                 </div>
+                                 <div class="form-group row">
+                                     <label for="user_name" class="col-md-4 col-form-label text-md-right">City</label>
+                                     <div class="col-md-6">
+                                         {{form.city}}
+                                     </div>
+                                 </div>
+ 
+                                 <div class="form-group row">
+                                     <label for="phone_number" class="col-md-4 col-form-label text-md-right">Street</label>
+                                     <div class="col-md-6" required>
+                                         {{form.street}}
+                                     </div>
+                                 </div>
+ 
+                                 <div class="form-group row">
+                                     <label for="present_address" class="col-md-4 col-form-label text-md-right">plaque</label>
+                                     <div class="col-md-6">
+                                         {{form.plaque}}
+                                     </div>
+                                 </div>
+                                 <div class="form-group row">
+                                     <label for="nid_number" class="col-md-4 col-form-label text-md-right"> Main Address</label>
+                                     <div class="col-md-6">
+                                       {{form.is_main}}
+                                     </div>
+                                 </div>
+ 
+                                     <div class="col-md-6 offset-md-4">
+                                         <button type="submit" class="btn btn-primary">
+                                         Register
+                                         </button>
+                                     </div>
+                                 </div>
+                             </form>
+                         </div>
+                     </div>
+             </div>
+         </div>
+     </div>
+ 
+ </main>
+ 
+ <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+ <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+ </body>
+ </html>
+ 

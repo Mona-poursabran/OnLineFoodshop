@@ -1,0 +1,46 @@
+{% extends 'restaurant/Manager_panel.html' %}
+
+{% block content %}
+{% load static %}
+<section id="story" class="description_content">
+    <div class="text-content container">
+        <div class="col-md-6" style='font-size:24px'>
+            <h1>Branch Info</h1>
+            
+            <div class="fa fa-cutlery fa-2x"></div>  
+                {% for branch in branch_list %}
+
+                {% if branch.manager.username == user.username %}
+                <p> <a href="{% url 'branch_edit' branch.pk %}" style="text-decoration:none; color: #935c1b;font-size: 39px;" > Edit Branch Info </a> </p>
+                <br>
+                <p><b>Branch Name:</b>{{branch.name}} </p>
+                <br>
+                <p><b>Restaurant Name:</b> {{branch.branch_name}}  </p>
+                <br>
+                <p><b>Category:</b>{{branch.category}} </p>
+                <br>
+                <p><b>Address:</b> {{branch.address}} </p>
+                <br>
+                {% if branch.main_branch == True %}
+                <p><b>Main Branch</b> {{branch.main_branch}} </p>
+                {% endif %} 
+                <br>
+                <p> <a href="{% url 'branch_detail_manager' branch.pk %}" style="text-decoration:none; color: #935c1b;font-size: 20px;" class="btn btn-dark"> Check Menu </a> </p>      
+                {% endif %}               
+                {% endfor %}
+            
+        </div>
+        <div class="col-md-6">
+            <div class="img-section">
+               <img src="{% static 'Admin_panel/images/kabob.jpg' %}" width="250" height="220">
+               <img src="{% static 'Admin_panel/images/limes.jpg' %}" width="250" height="220">
+               <div class="img-section-space"></div>
+               <img src="{% static 'Admin_panel/images/radish.jpg' %}"  width="250" height="220">
+               <img src="{% static 'Admin_panel/images/corn.jpg' %}"  width="250" height="220">
+           </div>
+        </div>
+    </div>
+</section>
+
+{% endblock content %}
+{% block footer %}{% endblock footer %}

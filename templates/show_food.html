@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+    <div class="container mt-5">    
+        <table class="table table-striped mt-4">
+             <thead>
+                 <tr>
+                     <th scope="col">Name</th>
+                     <th scope="col">Image</th>
+                
+                 </tr>
+             </thead>
+             <tbody class='list'>
+               <tr>
+                   <!-- lsit of foods -->
+               </tr>
+             </tbody>
+        </table>
+ <script src="https://code.jquery.com/jquery-3.6.0.min.js" 
+     integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" 
+     crossorigin="anonymous"></script>
+<script>
+    
+    var URL= "{% url 'foods' %}"
+    console.log(URL)
+    console.log('Hello')
+    $(document).ready(function(){
+        $.ajax({
+            url:URL,
+            datatype: 'json',
+            success: function(res){
+                console.log(res[0]['category'])
+                for (var i in res ){
+                    var items = `<tr>
+                        + <th> ${res[i].food_name} </th> +
+                        <th> <img src="${res[i].image}" style="width:30%; height:30%"> </th> +
+                        `
+                $('.list').append(items)
+                }
+            }
+        })
+    })
+
+</script>
+{% endblock content %}

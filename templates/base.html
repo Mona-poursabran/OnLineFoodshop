@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>{% block title %}{% endblock title %}</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    {% block link %}{% endblock link %}
+    
+    {% load static %}
+    <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Great+Vibes&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="{% static 'food/css/open-iconic-bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'food/css/animate.css' %}">
+    
+    <link rel="stylesheet" href="{% static 'food/css/owl.carousel.min.css' %}">
+    <link rel="stylesheet" href="{% static 'food/css/owl.theme.default.min.css' %}">
+    <link rel="stylesheet" href="{% static 'food/css/magnific-popup.css' %}">
+
+    <link rel="stylesheet" href="{% static 'food/css/aos.css' %}">
+
+    <link rel="stylesheet" href="{% static 'food/css/ionicons.min.css' %}">
+
+    <link rel="stylesheet" href="{% static 'food/css/bootstrap-datepicker.css' %}">
+    <link rel="stylesheet" href="{% static 'food/css/jquery.timepicker.css' %}">
+
+    
+    <link rel="stylesheet" href="{% static 'food/css/flaticon.css' %}">
+    <link rel="stylesheet" href="{% static 'food/css/icomoon.css' %}">
+    <link rel="stylesheet" href="{% static 'food/css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    {% block script1 %}{% endblock script1 %}
+  </head>
+  <body>
+
+	  <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
+	    <div class="container">
+	     {% block logo %} <a class="navbar-brand" href="{% url 'home' %}">Online Food</a>  {% endblock logo %}
+	      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+	        <span class="oi oi-menu"></span> Foods
+	      </button>
+
+	      <div class="collapse navbar-collapse" id="ftco-nav">
+	        <ul class="navbar-nav ml-auto">
+	        {% block navbar %}	<li class="nav-item"><a href="{% url 'home' %}" class="nav-link">Home</a></li> 
+                        <li class="nav-item active"><a href="{% url 'cart' %}" class="nav-link">Cart 🛒</a></li>
+          {% endblock navbar  %}
+	        	{% block admin %}{% endblock admin %}
+                {% block user %}{% endblock user %}
+				
+			</ul>
+	      </div>
+	    </div>
+	  </nav>
+    <!-- END nav -->
+    
+    <section class="hero-wrap hero-wrap-2" style="background-image: url('{% static 'food/images/bg_3.jpg' %}');" data-stellar-background-ratio="0.5">
+      <div class="overlay"></div>
+      <div class="container">
+        <div class="row no-gutters slider-text align-items-end justify-content-center">
+          <div class="col-md-9 ftco-animate text-center mb-4">
+            {% block welcome %}}<h1 class="mb-2 bread">Welcome</h1> {% endblock welcome %}
+            {% comment %} <p class="breadcrumbs"><span class="mr-2"><a href="index.html">Home <i class="ion-ios-arrow-forward"></i></a></span> <span>Menu <i class="ion-ios-arrow-forward"></i></span></p> {% endcomment %}
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {% block content %}{% endblock content %}
+
+
+    {% block footer %}
+    {% endblock footer %}
+  
+    <!-- loader -->
+    <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>
+  
+  {% load static %}
+    <script src="{% static 'food/js/jquery.min.js' %}"></script>
+    <script src="{% static 'food/js/jquery-migrate-3.0.1.min.js' %}"></script>
+    <script src="{% static 'food/js/popper.min.js' %}"></script>
+    <script src="{% static 'food/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'food/js/jquery.easing.1.3.js' %}"></script>
+    <script src="{% static 'food/js/jquery.waypoints.min.js' %}"></script>
+    <script src="{% static 'food/js/jquery.stellar.min.js' %}"></script>
+    <script src="{% static 'food/js/owl.carousel.min.js' %}"></script>
+    <script src="{% static 'food/js/jquery.magnific-popup.min.js' %}"></script>
+    <script src="{% static 'food/js/aos.js' %}"></script>
+    <script src="{% static 'food/js/jquery.animateNumber.min.js' %}"></script>
+    <script src="{% static 'food/js/bootstrap-datepicker.js' %}"></script>
+    <script src="{% static 'food/js/jquery.timepicker.min.js' %}"></script>
+    <script src="{% static 'food/js/scrollax.min.js' %}"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
+    <script src="{% static 'food/js/google-map.js' %}"></script>
+    <script src="{% static 'food/js/main.js' %}"></script>
+
+    <script>{% block script %}{% endblock script %} </script>
+    {% block scriptjs %}{% endblock scriptjs %}
+
+    <script type="text/javascript">
+
+      function getCookie(name) {
+          var cookieValue = null;
+          if (document.cookie && document.cookie !== '') {
+              var cookies = document.cookie.split(';');
+              for (var i = 0; i < cookies.length; i++) {
+                  var cookie = cookies[i].trim();
+                  // Does this cookie string begin with the name we want?
+                  if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                      cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                      break;
+                  }
+              }
+          }
+          return cookieValue;
+      }
+  
+  
+      function uuidv4() {
+        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+          var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+          return v.toString(16);
+        });
+      }
+  
+  
+  
+  
+      let device = getCookie('device')
+  
+      if (device == null || device == undefined){
+        device = uuidv4()
+      }
+  
+      document.cookie ='device=' + device + ";domain=;path=/"
+  
+    </script>
+  
+</body>
+</html>

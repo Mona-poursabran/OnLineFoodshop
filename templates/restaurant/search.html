@@ -1,0 +1,100 @@
+{% extends 'base.html' %}
+{% block title %} Search Results{% endblock title %}
+{% block content %}
+ 
+<div class="container">
+
+ <a href="{% url 'home' %}" class="btn btn-primary  mb-2" style="margin-top: 10px">Back</a>
+   		<section class="ftco-section" style="padding: 3em 0;" >
+    	<div class="container">
+        <div class="ftco-search">
+	          <div class="col-md-12 tab-wrap">
+	            
+	            <div class="tab-content" id="v-pills-tabContent">
+
+	              <div class="tab-pane fade show active" id="v-pills-1" role="tabpanel" aria-labelledby="day-1-tab">
+	              	<div class="row no-gutters d-flex align-items-stretch">
+					        	<div class="col-md-12 col-lg-6 d-flex align-self-stretch">
+					        		<div class="menus d-sm-flex ftco-animate align-items-stretch">
+					              <div class="menu-img img rounded" style="background-image: url({{obj.food.image.url}});"></div>
+					              <div class="text d-flex align-items-center">
+													<div>
+						              	<div class="d-flex">
+							                <div class="one-half">
+							                  <h3><a href="{% url 'food_detail' obj.food.id %}">{{obj.food}}</a></h3>
+							                </div>
+							                <div class="one-forth">
+							                  <span class="price">{{obj.price}}</span>
+							                </div>
+							              </div>
+							              <p><span>Restaurant: {{obj.menu.branch.name}}</p>
+										  <p><span>Branch: {{obj.menu.branch.branch_name}}</p>
+											{% if not user.is_superuser and not user.is_staff %}
+							              <p><a href="{% url 'product' obj.pk %}" class="btn btn-primary">Order now</a></p>
+										  {% endif %} 
+										</div>
+					              </div>
+					            </div>
+					        	</div>
+					        </div>
+					        </div>
+	              </div>
+ </div> 
+         
+
+{% comment %}  
+ <a href="{% url 'home' %}" class="btn btn-primary  mb-2" style="margin-top: 10px">Back</a>
+{% if query %} 
+ 
+            <h2>
+ 
+            {% with results.count as total_results %}
+ 
+            Found {{ total_results }} result{{ total_results|pluralize }}
+ 
+            {% endwith %}
+ 
+            </h2> 
+ 
+   		<section class="ftco-section" style="padding: 3em 0;" >
+    	<div class="container">
+        <div class="ftco-search">
+	          <div class="col-md-12 tab-wrap">
+	            
+	            <div class="tab-content" id="v-pills-tabContent">
+
+	              <div class="tab-pane fade show active" id="v-pills-1" role="tabpanel" aria-labelledby="day-1-tab">
+	              	<div class="row no-gutters d-flex align-items-stretch">
+						 {% for  obj in results %} 
+					        	<div class="col-md-12 col-lg-6 d-flex align-self-stretch">
+					        		<div class="menus d-sm-flex ftco-animate align-items-stretch">
+					              <div class="menu-img img rounded" style="background-image: url({{obj.food.image.url}});"></div>
+					              <div class="text d-flex align-items-center">
+													<div>
+						              	<div class="d-flex">
+							                <div class="one-half">
+							                  <h3><a href="{% url 'food_detail' obj.food.id %}">{{obj.food}}</a></h3>
+							                </div>
+							                <div class="one-forth">
+							                  <span class="price">{{obj.price}}</span>
+							                </div>
+							              </div>
+							              <p><span>Restaurant: {{obj.menu.branch.name}}</p>
+										  <p><span>Branch: {{obj.menu.branch.branch_name}}</p>
+											{% if not user.is_superuser %}
+							              <p><a href="{% url 'product' obj.pk %}" class="btn btn-primary">Order now</a></p>
+										  {% endif %} 
+										</div>
+					              </div>
+					            </div>
+					        	</div>
+						     {% endfor %} 
+					        </div>
+					        </div>
+	              </div>
+{% endif %}
+ </div> {% endcomment %}
+
+{% endblock content %}
+
+
