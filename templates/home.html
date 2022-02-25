@@ -186,24 +186,30 @@
 
 						{% comment %} ______________________best seller Restaurants__________________________ {% endcomment %}
 
-					<h4 class="p-3 mb-2 bg-info text-dark text-center" style="margin-top:10px"><b> Best Seller Restaurants :</b> </h4>
-						<div class="container-fluid">
-							<div class="card" style="width: 18rem;">
+					<h4 class="p-3 mb-2 bg-info text-dark text-center" style="margin-top:10px"><b> Best Seller Restaurants :</b> </h4>		
+					<div class="container-fluid">
+						<div class="tab-pane fade show active" id="v-pills-1" role="tabpanel" aria-labelledby="day-1-tab">
+							<div class="row no-gutters d-flex flex-wrap align-items-stretch">
 								{% for best in best_restaurant %}
-								<img class="card-img-top" src="{{best.branch.image.url}}" alt="Card image cap">
-								<div class="card-body">
-								  <p class="card-text"><b> <a href="{% url 'branch_detail' best.branch.pk %}">  Restaurant: </b> <strong style="color:rgb(159, 18, 128)"> {{best.branch.name}} </strong> </a>  </p>
-								  <p class ="card-text"> <b>Branch:</b> <strong style="color:rgb(132, 5, 26)"> {{best.branch.branch_name}} </strong> </p>
+									<div class="col-md-12 col-lg-6 d-flex align-self-stretch">
+										<div class="menus d-sm-flex ftco-animate align-items-stretch">
+											<img src="{{best.branch.image.url}}" alt="image"  class="menu-img img" >
+										<div class="text d-flex align-items-center">
+												
+												<div class="d-flex">
+												<div class="one-half">                           
+													<span class="price"><a href="{% url 'branch_detail' best.branch.pk %}"> Restaurant: {{best.branch.name}} </a></span>
+													<span class="price"><b>Branch:</b> <strong style="color:rgb(132, 5, 26)">{{best.branch.branch_name}} </strong> </span>
+												</div>
+												</div>
+											</div>
+										</div> 
+									</div>
+									{% endfor %}
 								</div>
-								{% endfor %}
 							</div>
 						</div>
-						
 					</div>
-				</div>
-				</div>
-			</div>
-			</div>
 		</section>
 			
 		

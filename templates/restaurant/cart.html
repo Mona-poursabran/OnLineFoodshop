@@ -30,13 +30,13 @@
           </div>
 
           <div id="address-body" class="modal-body">
-              <form id="select-address-form" class="form-group" action="" method='POST'>{% csrf_token %}
+              <form id="select-address-form" class="form-group" action="" method='POST'>
+                {% csrf_token %}
                   {% for address in addresses %}
-               
-                      <input type="radio" id="address{{forloop.counter}}" name="primary" value="{{forloop.counter}}" checked="checked" }>
-                        
-                      <label for="address.{{forloop.counter}}">{{ address.city }} -{{address.street}} - Plaque {{address.plaque}}</label>
-                      <br>
+                  <input type="radio" id="address.{{forloop.counter}}" name="primary" value="{{forloop.counter}}"
+                  {% if address %} checked="checked" {% endif %}>
+                  <label for="address.{{forloop.counter}}">{{ address.city }} - {{address.street}} - Plaque {{address.plaque}}</label>
+                  <br>
                   {% endfor %}
               </form>
           </div>
@@ -147,10 +147,9 @@
     })
 
     $("#continue-btn").click(function(e){
-        selected_address_index = $('input[type=radio]').index($('input:checked'))
-        console.log(selected_address_index)
-        data = {"selected_address_index": selected_address_index}
-        console.log(data)
+      selected_address_index = $('input[type=radio]').index($('input:checked'))
+      data = {"selected_address_index": selected_address_index}
+        console.log('selected_address_index', data)
         sendAjax(CHECKOUT_URL, data)
     })
 
@@ -166,6 +165,9 @@
             success: function(response) {
               console.log('response', response)
                 reload(response)
+            },
+            error:function(data){
+              console.log('error',data)
             }
         })
     }
