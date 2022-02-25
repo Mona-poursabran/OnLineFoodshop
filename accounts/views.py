@@ -130,17 +130,7 @@ class DeleteMenu(AbstractRestaurantManager,StaffRequiredMixin,LoginRequiredMixin
         return reverse("branch_detail_manager", kwargs={"pk": pk})
 
 
-class ShowOrderStatus(AbstractRestaurantManager,StaffRequiredMixin, LoginRequiredMixin, ListView):
-    model = Order
-    context_object_name= 'OrderItem'
-    template_name = "restaurant/order_status_branch.html"
 
-    def get_context_data(self, **kwargs):
-        branch = Branch.objects.get(manager= self.request.user)
-        context = super().get_context_data(**kwargs)
-        context['branch_status'] = Order.objects.filter(status= "Regist", branch=branch)
-        context['branch'] = branch
-        return context
 
   
 @login_required
@@ -173,7 +163,23 @@ def create_menu(req):
     return render(req, 'restaurant/create_menu.html', context)
     
 
+class MangerCheckStatus(AbstractRestaurantManager, ListView):
+    model = Order
+    template_name = "restaurant/managerordercheck.html"
 
+    def get_queryset(self):
+        return Order.objects.filter(status='Regist').filter(order__menu_item__menu__branch__manager__username=self.request.user.username).distinct()
+
+    def post(self, request):
+        status ={'Send': 'Send', 'Delivery': 'Delivery'}
+        if request.is_ajax():
+            order_index = int(request.POST.get('order_index'))
+            print('order_index', order_index)
+            order = self.get_queryset()[order_index]
+            order.status = status.get(request.POST.get('status'))
+            print('status', order.status)
+            order.save()
+            return JsonResponse({})
 
 
 ########################################## Customer Info ############################################################
