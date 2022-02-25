@@ -1,0 +1,381 @@
+.card {
+    margin: auto;
+    width: 320px;
+    max-width: 600px;
+    border-radius: 20px
+}
+
+.mt-50 {
+    margin-top: 50px
+}
+
+.mb-50 {
+    margin-bottom: 50px
+}
+
+@media(max-width:767px) {
+    .card {
+        width: 80%
+    }
+}
+
+@media(height:1366px) {
+    .card {
+        width: 75%
+    }
+}
+
+#orderno {
+    padding: 1vh 2vh 0;
+    font-size: smaller
+}
+
+.gap .col-2 {
+    background-color: rgb(213, 217, 233);
+    width: 1.2rem;
+    padding: 1.2rem;
+    margin-top: -2.5rem;
+    border-radius: 1.2rem
+}
+
+.title {
+    display: flex;
+    text-align: center;
+    font-size: 2rem;
+    font-weight: bold;
+    padding: 12%
+}
+
+.main {
+    padding: 0 2rem
+}
+
+.main img {
+    border-radius: 7px
+}
+
+.main p {
+    margin-bottom: 0;
+    font-size: 0.75rem
+}
+
+#sub-title p {
+    margin: 1vh 0 2vh 0;
+    font-size: 1rem
+}
+
+.row-main {
+    padding: 1.5vh 0;
+    align-items: center
+}
+
+hr {
+    margin: 1rem -1vh;
+    border-top: 1px solid rgb(214, 214, 214)
+}
+
+.total {
+    font-size: 1rem
+}
+
+@media(height: 1366px) {
+    .main p {
+        margin-bottom: 0;
+        font-size: 1.2rem
+    }
+
+    .total {
+        font-size: 1.5rem
+    }
+}
+
+.bttnf {
+    background-color: rgb(219, 3, 3);
+    border-color: rgb(145, 7, 7);
+    color: white;
+    margin: 7vh 0;
+    border-radius: 7px;
+    width: 60%;
+    font-size: 0.8rem;
+    padding: 0.8rem;
+    justify-content: center
+}
+
+.bttnf:focus {
+    box-shadow: none;
+    outline: none;
+    box-shadow: none;
+    color: white;
+    -webkit-box-shadow: none;
+    -webkit-user-select: none;
+    transition: none
+}
+
+.bttnf:hover {
+    color: white
+}
+
+
+div.text-uppercase {
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.1rem
+}
+
+.btn#sub {
+    font-size: 0.8rem;
+    font-weight: 700;
+    border: 1px solid #ddd
+}
+
+.btn#sub:hover {
+    background-color: #333;
+    color: #FFF;
+    border: 1ps solid #333
+}
+
+.fa-cog {
+    color: #a8a8a8;
+    font-size: 0.8rem
+}
+
+.ml-auto.btn:hover span {
+    color: #333
+}
+
+div.btn {
+    padding: 8px 20px
+}
+
+.notification {
+    background-color: #e02727;
+    padding: 0px 10px
+}
+
+.notification button.btn {
+    box-shadow: none
+}
+
+.close {
+    font-size: 1rem;
+    font-weight: normal;
+    opacity: 1
+}
+
+.close:hover {
+    color: #EEE
+}
+
+.alert-dismissible .close {
+    position: unset
+}
+
+button:focus {
+    outline: none
+}
+
+.h4 {
+    margin: 0
+}
+
+.editors {
+    position: relative
+}
+
+.editors img {
+    object-fit: cover;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 5px solid #FFF
+}
+
+
+div.text-muted {
+    font-size: 0.9rem
+}
+
+.table {
+    overflow: hidden
+}
+
+.table thead tr th {
+    letter-spacing: 0.08rem;
+    font-weight: normal
+}
+
+.table tr td,
+.table tr th {
+    border: none;
+    text-align: center
+}
+
+.table.activitites thead {
+    border-bottom: 1px solid #d3a6a6;
+    font-size: 0.8rem;
+    font-weight: 700
+}
+
+.table thead {
+    font-size: 0.8rem;
+    font-weight: 700
+}
+
+.table.activitites {
+    position: relative
+}
+
+/* .table.activitites thead::after {
+    position: absolute;
+    content: "RECENT ACTIVITIES";
+    background: #FFF;
+    padding: 0px 8px;
+    top: 38px;
+    letter-spacing: 0.08rem;
+    font-size: 0.6rem;
+    color: #851414;
+    font-weight: 600
+} */
+
+.table tbody td.item {
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.2rem;
+    font-weight: 900;
+    text-align: left
+}
+
+div.new {
+    font-size: 0.7rem;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: normal;
+    letter-spacing: 0.08rem;
+    background-color: #ec9e9e;
+    color: #c73636;
+    display: inline-block
+}
+
+.table tbody td.item img {
+    width: 30px;
+    height: 30px;
+    object-fit: contain
+}
+
+.table thead th.header {
+    text-align: left
+}
+
+.table tbody tr {
+    padding-top: 10px;
+    padding: 10px 20px;
+    border-bottom: 1px solid #ccc;
+    transition: all .4s ease-in-out
+}
+
+.table tbody tr:last-child {
+    border: none
+}
+
+td .close,
+td .btn {
+    opacity: 0;
+    background: #fff;
+    font-weight: 600;
+    font-size: 0.9rem
+}
+
+.table tbody tr:hover {
+    transform: scale(1.004);
+    box-shadow: 2px 2px 10px #a5a5a5;
+    cursor: pointer;
+    overflow: hidden;
+    scroll-behavior: unset
+}
+
+.table tbody tr:hover .close {
+    font-size: 1.5rem;
+    opacity: 1
+}
+
+.table tbody tr:hover .close:hover {
+    color: #aaa
+}
+
+.table tbody tr:hover .btn {
+    border: 1px solid #ddd;
+    opacity: 1;
+    background: #fff
+}
+
+
+.comments {
+    visibility: visible
+}
+
+hr.items {
+    position: relative;
+    margin: 0;
+    margin-top: 10px
+}
+
+hr.items:after {
+    position: absolute;
+    content: "ALL ITEMS";
+    background: #FFF;
+    top: -9px;
+    padding: 0px 8px;
+    letter-spacing: 0.08rem;
+    font-size: 0.6rem;
+    font-weight: 600
+}
+
+.subtotal {
+    border-bottom-left-radius: 50px;
+    background-color: #ccc
+}
+
+.tag,
+.fa-shoppping-cart {
+    font-size: 0.5rem
+}
+
+button.btn:hover {
+    background-color: #e91515;
+    box-shadow: none;
+    outline: none
+}
+
+@media(max-width:760px) {
+    .table.activitites thead::after {
+        top: 35px
+    }
+}
+
+@media(max-width:576px) {
+    .table.activitites thead::after {
+        top: 55px
+    }
+
+
+
+    .editors img {
+        width: 20px;
+        height: 20px;
+        border: 1px solid #FFF
+    }
+}
+
+@media(max-width:400px) {
+    .notification {
+        font-size: 0.7rem
+    }
+
+    .close {
+        font-size: 0.7rem;
+        font-weight: normal;
+        opacity: 1
+    }
+
+    .wrapper {
+        padding: 10px
+    }
+}
