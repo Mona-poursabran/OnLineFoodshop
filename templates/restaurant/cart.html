@@ -20,30 +20,30 @@
 
 
 {% block content %}
-{{request.user}}
+
 <div class="modal fade" id="addressModal" tabindex="-1" aria-labelledby="addressModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-scrollable">
       <div class="modal-content">
           <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">انتخاب آدرس</h5>
+              <h5 class="modal-title" id="exampleModalLabel">Choose Address</h5>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
 
           <div id="address-body" class="modal-body">
-              <form id="select-address-form" class="form-group" action="">{% csrf_token %}
-                  {% for address in request.user.customer_addr.all %}
+              <form id="select-address-form" class="form-group" action="" method='POST'>{% csrf_token %}
+                  {% for address in addresses %}
                
-                      <input type="radio" id="address{{forloop.counter}}" name="primary" value="{{forloop.counter}}"
-                             {% if address.is_main %} checked="checked" {% endif %}>
-                      <label for="address.{{forloop.counter}}">{{ address.address.city }} - {{address.address.street}} - پلاک {{address.address.plaque}}</label>
+                      <input type="radio" id="address{{forloop.counter}}" name="primary" value="{{forloop.counter}}" checked="checked" }>
+                        
+                      <label for="address.{{forloop.counter}}">{{ address.city }} -{{address.street}} - Plaque {{address.plaque}}</label>
                       <br>
                   {% endfor %}
               </form>
           </div>
 
           <div class="modal-footer">
-              <button id="continue-btn" type="submit" class="add-address btn btn-primary">ادامه</button>
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">انصراف</button>
+              <button id="continue-btn" type="submit" class="add-address btn btn-primary">Confirm</button>
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Reject</button>
           </div>
       </div>
   </div>
@@ -54,8 +54,8 @@
   <div class="row">
     <div class="col-lg-12">
       <div class="box-element">
-        <button class="btn btn-info m-3" type='submit' id ='checkout-btn'
-        > Continue Shopping</button>
+        <button class="btn btn-info m-3" type='submit' id ='checkout-btn'> Continue Shopping</button>
+        
         <br>
         <br>
         <div class="wrapper">
@@ -108,7 +108,7 @@
 					</td>
           <td class="item">{{i.quantity}}</td>
           <td class="d-flex flex-column">{{i.menu_item.price}}</td>
-          <td class="font-weight-bold">{{i.get_total}}  <div class="close">&times;</div> <button class="d-flex justify-content-end bttn border delete-btn" >Remove</button> </td>
+          <td class="font-weight-bold">{{i.get_total}}  <div class="close">&times;</div> <button class="d-flex justify-content-end bttn border delete-btn" type='submit' >Remove</button> </td>
                   </tr>
 				  {% endfor %} 
                 </tbody>
@@ -124,9 +124,16 @@
 {% endblock content %}
 
 {% block scriptjs %}
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous">
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+        integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer">
+</script>
 <script>
   var CSRF_TOKEN = '{{ csrf_token }}';
-  var URL = "{% url 'cart' %}";
+  var URL = "{% url 'update_order'  %}";
   var CHECKOUT_URL = "{% url 'checkout' %}";
   var USER_IS_AUTHENTICATED = "{{user.is_authenticated}}";
 
@@ -135,26 +142,29 @@
         if (USER_IS_AUTHENTICATED == "True") {
             $("#addressModal").modal('show')
         } else {
-            alert("ابتدا وارد شوید.")
+            alert("First Log In!")
         };
     })
 
     $("#continue-btn").click(function(e){
         selected_address_index = $('input[type=radio]').index($('input:checked'))
+        console.log(selected_address_index)
         data = {"selected_address_index": selected_address_index}
+        console.log(data)
         sendAjax(CHECKOUT_URL, data)
     })
 
 
     function sendAjax(url, data={}) {
         data['csrfmiddlewaretoken'] = CSRF_TOKEN
-        console.log(data)
+        console.log('data', data)
         $.ajax({
             type: 'POST',
             url: url,
             dataType: 'json',
             data: data,
             success: function(response) {
+              console.log('response', response)
                 reload(response)
             }
         })
@@ -166,6 +176,23 @@
         alert(response['message'])
         window.location.reload();
     }
+})
+
+$(document).ready(function () {
+  $('.delete-btn').click(function(e){
+      index_item = $('.delete-btn').index($(this))
+      $(this).closest('tr').remove()
+      if ($('.delete-btn').length == 0) {
+          $('#cart').empty()
+          $('#cart').html('<h1 class="text-center p-4">Your Cart Is Empty!</h1>')
+      }
+      $.ajax({
+          type: 'POST',
+          url: URL,
+          data: {'csrfmiddlewaretoken': CSRF_TOKEN, 'order_item': index_item},
+      })
+   })
+  
 })
 
 </script>
