@@ -123,7 +123,7 @@ class Order(models.Model):
         ('Send', 'Send'),
         ('Delivery', 'Delivery')]
 
-    branch = models.ForeignKey(Branch, related_name='branch_order' ,on_delete=models.SET_NULL, null=True)
+    # branch = models.ForeignKey(Branch, related_name='branch_order' ,on_delete=models.SET_NULL, null=True)
     customer = models.ForeignKey('accounts.Customer', related_name='customer_order', on_delete=models.SET_NULL, null= True)
     customer_addr = models.ForeignKey('accounts.Address', on_delete=models.CASCADE, null=True)
     menu_item = models.ManyToManyField(MenuItem, through=OrderItem,  related_name="order_food")
@@ -153,4 +153,4 @@ class Order(models.Model):
  
 
     def __str__(self) -> str:
-        return f'{str(self.status)} >> {self.branch}'
+        return f'{str(self.status)}'
