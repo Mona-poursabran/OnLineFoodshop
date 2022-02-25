@@ -15,7 +15,7 @@ urlpatterns = [
     path('branch/create_menu/', create_menu, name="create_menu" ),
     path('branch/<int:pk>/menu_update/',UpdateMenu.as_view(), name='update_menu'),
     path('branch/<int:pk>/menu_delete/', DeleteMenu.as_view(), name='delete_menu'),
-    path('branch/date_order/', ShowOrderStatus.as_view(), name= "show_status_branch"),
+    path('checkorders/', MangerCheckStatus.as_view(), name='checkstatus'),
     
     
     #PANEL CUSTOMER :)
