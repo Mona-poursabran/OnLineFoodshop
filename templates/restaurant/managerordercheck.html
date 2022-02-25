@@ -1,0 +1,99 @@
+{% extends 'restaurant/Manager_panel.html' %}
+
+
+{% load static %}
+{% block content %}{% endblock content %}
+{% block content1 %}
+<div class="container p-3 text-center" style= 'margin-top:100px'>
+    {% if not object_list %}
+    <div class="row my-3 mx-auto w-50 justify-content-center">
+        <div class="row">
+            <p class="h3 text-center text-light my-5">
+                <strong>
+                    سفارشی پیدا نشد!
+                </strong>
+            </p>
+        </div>
+    </div>
+    {% else %}
+    <div class="row my-5">
+    </div>
+    <div class="row my-5">
+        <ol class="list-group list-group-numbered">
+            {% for order in object_list %}
+            <li class="list-group-item d-flex my-2 text-light"
+                style="background-color: #0c79a0; margin:15px">
+
+                <div class="col-3 p-2" style='color:black; font-weight:bold'>
+                    Customer_email: {{ order.customer.email }} Customer_username: {{order.customer.username}}
+                </div>
+                <div class="col-3" style="color:black; font-size:25px; margin:10px">
+                    {% if order.status == 'Regist' %}
+                    status: Regist 
+                    {% elif order.status == 'Send' %}
+                    status: Send 
+                    {% elif order.status == 'Delivery' %}
+                    status: Delivery
+                    {% endif %}
+                </div>
+                <div class="col-3" style="font-size:18px">
+                    Order's Date: {{ order.created_at_jalali | date:"H:i Y/m/d"}}
+                </div>
+                <div class="col-3">
+                    <select class="form-select-sm sopt" aria-label="Cart Status" style="color:black">
+                        {% if order.status == 'Regist' %}
+                        <option selected>Regist</option>
+                        <option value="confirmed">Send</option>
+                        <option value="cancelled">Delivery</option>
+                        {% elif order.status == 'Send' %}
+                        <option selected>Send</option>
+
+                        <option value="paid">Delivery</option>
+
+                        {% else %}
+                        <option selected>Delivery</option>
+
+                        {% endif %}
+                    </select>
+                </div>
+            </li>
+            {% endfor %}
+        </ol>
+    </div>
+
+    {% endif %}
+</div>
+{% endblock content1 %}
+{% block scriptjs %}
+<script>
+    var URL = "{% url 'checkstatus' %}"
+    var CSRF_TOKEN = "{{csrf_token}}"
+
+    $(document).ready(function() {
+        $('.sopt').change(function (e) {
+            var optionSelected = $("option:selected", this)
+            var text = optionSelected.text();
+            
+            console.log('optionSelected', optionSelected)
+            console.log('text', text)
+            this_li = $(this).parent().parent()
+            console.log('this_li ', this_li )
+            
+            $(this_li).children().eq(1).text('status: ' + text)
+            
+            console.log($(this_li).children().eq('Regist').text('status: ' + text))
+            
+            order_index = $('ol').children().index($(this_li))
+            
+            $.ajax({
+                type: 'POST',
+                url: URL,
+                data: {'csrfmiddlewaretoken': CSRF_TOKEN, 'order_index': order_index, 'status': text},
+            })
+        });
+    })
+</script>
+
+{% endblock scriptjs %}
+
+{% block footer %}{% endblock footer %}

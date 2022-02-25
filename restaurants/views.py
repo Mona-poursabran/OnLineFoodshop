@@ -297,14 +297,18 @@ class CartView(View):
 
 def checkout(req):
     if not req.user.is_superuser and not req.user.is_staff:
-        if req.method == 'POST' and req.is_ajax():
-            selected_address_index = int(req.POST.get['selected_address_index'])
-            selected_address = Address.objects.all()[selected_address_index]
-            
+        if req.method == 'POST' and req.is_ajax:
+            index = int(req.POST.get("selected_address_index"))
+            selected_address = Address.objects.all()[index]
+            print('selected_address',selected_address)
             customer = req.user
             order = Order.objects.get(customer= customer, status= 'Order')
+            b = Branch.objects.all()
+            for i in b:
+                pk = i.pk
             order.status = 'Regist'
             order.customer_addr = selected_address
+            order.total_price = order.get_cart_total
             order.save()
             for orderitem in order.order.all():
                 orderitem.menu_item.quantity -= orderitem.quantity
